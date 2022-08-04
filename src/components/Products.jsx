@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import axios from 'axios';
 import useProductContext from '../context/products';
+import { Product } from './Product';
 
 export const Products = () => {
-  const { dispatch } = useProductContext();
+  const { dispatch, products } = useProductContext();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -23,10 +24,27 @@ export const Products = () => {
     getProducts();
   }, [dispatch]);
 
-  return <Wrapper></Wrapper>;
+  return (
+    <Wrapper>
+      {products?.map((product) => (
+        <Product key={product._id} {...product} />
+      ))}
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.main`
-  width: 85vw;
+  width: 100%;
+  max-width: 1100px;
   margin-inline: auto;
+  padding: 3rem 0;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+
+  @media screen and (max-width: 520px) {
+    grid-template-columns: 1fr;
+    width: 90vw;
+  }
 `;
