@@ -6,3 +6,4 @@ export { Select } from './Select';
 export { Pagination } from './Pagination';
 
 export { ScrollToTop } from './common/ScrollToTop';
+export { Loader } from './common/Loader';

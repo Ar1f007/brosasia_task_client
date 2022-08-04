@@ -1,30 +1,41 @@
 import styled from 'styled-components';
 
 import { useEffect } from 'react';
-import { Product } from '../components';
+import { Product, Loader } from '../components';
 import axios from 'axios';
 import useProductContext from '../context/products';
 
 export const ProductList = () => {
-  const { dispatch, products, prodPerPage, queryTerm, page } = useProductContext();
+  const { dispatch, products, prodPerPage, queryTerm, page, loading } = useProductContext();
 
   useEffect(() => {
     const getProducts = async () => {
-      const { data } = await axios.get(
-        `http://localhost:5000/api/products?page=${page}&limit=${prodPerPage}&search=${queryTerm}`
-      );
+      try {
+        dispatch({ type: 'START_LOADING' });
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_ENDPOINT}/products?page=${page}&limit=${prodPerPage}&search=${queryTerm}`
+        );
 
-      dispatch({
-        type: 'GET_PRODUCTS_SUCCESS',
-        payload: {
-          products: data.products,
-          numOfPages: data.numOfPages,
-          totalProducts: data.totalProducts,
-        },
-      });
+        dispatch({ type: 'STOP_LOADING' });
+        dispatch({
+          type: 'GET_PRODUCTS_SUCCESS',
+          payload: {
+            products: data.products,
+            numOfPages: data.numOfPages,
+            totalProducts: data.totalProducts,
+          },
+        });
+      } catch (error) {
+        dispatch({ type: 'STOP_LOADING' });
+        alert('Something went wrong');
+      }
     };
     getProducts();
   }, [dispatch, page, prodPerPage, queryTerm]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Wrapper>

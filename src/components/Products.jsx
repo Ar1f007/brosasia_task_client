@@ -1,12 +1,14 @@
 import { ProductList, Select, Pagination } from '../components';
 import styled from 'styled-components';
+import useProductContext from '../context/products';
 
 export const Products = () => {
+  const { products } = useProductContext();
   return (
     <Wrapper>
       <Select />
       <ProductList />
-      <Pagination />
+      {products.length > 0 && <Pagination />}
     </Wrapper>
   );
 };
