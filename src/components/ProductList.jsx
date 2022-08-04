@@ -6,11 +6,13 @@ import axios from 'axios';
 import useProductContext from '../context/products';
 
 export const ProductList = () => {
-  const { dispatch, products, prodPerPage } = useProductContext();
+  const { dispatch, products, prodPerPage, queryTerm } = useProductContext();
 
   useEffect(() => {
     const getProducts = async () => {
-      const { data } = await axios.get(`http://localhost:5000/api/products?limit=${prodPerPage}`);
+      const { data } = await axios.get(
+        `http://localhost:5000/api/products?limit=${prodPerPage}&search=${queryTerm}`
+      );
 
       dispatch({
         type: 'GET_PRODUCTS_SUCCESS',
@@ -22,7 +24,7 @@ export const ProductList = () => {
       });
     };
     getProducts();
-  }, [dispatch, prodPerPage]);
+  }, [dispatch, prodPerPage, queryTerm]);
 
   return (
     <Wrapper>

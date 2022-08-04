@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   numOfPages: 1,
   totalProducts: 0,
   prodPerPage: 10,
+  queryTerm: '',
 };
 
 export const ProductContextProvider = ({ children }) => {

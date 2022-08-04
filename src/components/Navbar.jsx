@@ -1,10 +1,26 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useProductContext from '../context/products';
 
 export const Navbar = () => {
+  const [query, setQuery] = useState('');
+  const { dispatch } = useProductContext();
+
+  useEffect(() => {
+    dispatch({
+      type: 'SET_QUERY',
+      payload: { queryTerm: query },
+    });
+  }, [query, dispatch]);
+
   return (
     <Wrapper>
       <SearchContainer>
-        <Input placeholder="search by product name" />
+        <Input
+          placeholder="search by product name"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </SearchContainer>
     </Wrapper>
   );
