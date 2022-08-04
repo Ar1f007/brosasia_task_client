@@ -1,5 +1,5 @@
 export const reducer = (state, action) => {
-  const { products, numOfPages, totalProducts, prodPerPage, queryTerm } = action.payload;
+  const { products, numOfPages, totalProducts, prodPerPage, queryTerm, page } = action.payload;
 
   if (action.type === 'GET_PRODUCTS_SUCCESS') {
     return { ...state, products, numOfPages, totalProducts };
@@ -10,7 +10,11 @@ export const reducer = (state, action) => {
   }
 
   if (action.type === 'SET_QUERY') {
-    return { ...state, queryTerm };
+    return { ...state, queryTerm, page: 1 };
+  }
+
+  if (action.type === 'SET_PAGE') {
+    return { ...state, page };
   }
   return state;
 };

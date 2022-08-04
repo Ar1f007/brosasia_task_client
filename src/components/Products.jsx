@@ -1,4 +1,4 @@
-import { ProductList, Select } from '../components';
+import { ProductList, Select, Pagination } from '../components';
 import styled from 'styled-components';
 
 export const Products = () => {
@@ -6,6 +6,7 @@ export const Products = () => {
     <Wrapper>
       <Select />
       <ProductList />
+      <Pagination />
     </Wrapper>
   );
 };

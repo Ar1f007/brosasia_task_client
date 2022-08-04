@@ -6,12 +6,12 @@ import axios from 'axios';
 import useProductContext from '../context/products';
 
 export const ProductList = () => {
-  const { dispatch, products, prodPerPage, queryTerm } = useProductContext();
+  const { dispatch, products, prodPerPage, queryTerm, page } = useProductContext();
 
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/api/products?limit=${prodPerPage}&search=${queryTerm}`
+        `http://localhost:5000/api/products?page=${page}&limit=${prodPerPage}&search=${queryTerm}`
       );
 
       dispatch({
@@ -24,7 +24,7 @@ export const ProductList = () => {
       });
     };
     getProducts();
-  }, [dispatch, prodPerPage, queryTerm]);
+  }, [dispatch, page, prodPerPage, queryTerm]);
 
   return (
     <Wrapper>
