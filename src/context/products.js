@@ -6,7 +6,8 @@ const ProductContext = createContext();
 const INITIAL_STATE = {
   products: [],
   page: 1,
-  numberOfPages: 1,
+  numOfPages: 1,
+  totalProducts: 0,
 };
 
 export const ProductContextProvider = ({ children }) => {
